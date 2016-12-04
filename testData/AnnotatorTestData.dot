@@ -1,0 +1,6 @@
+// comment
+digraph g {
+    node [shape=plaintext];
+    A1 -> B1;
+    A1;
+}

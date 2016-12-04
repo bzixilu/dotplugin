@@ -1,0 +1,84 @@
+{
+  parserClass="org.plugin.dot.parser.DotParser"
+  parserUtilClass="org.plugin.dot.DotPSITreeUtil"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Dot"
+  psiImplClassSuffix="Impl"
+  psiPackage="org.plugin.dot.psi"
+  psiImplPackage="org.plugin.dot.psi.impl"
+
+  elementTypeHolderClass="org.plugin.dot.psi.DotTypes"
+  elementTypeClass="org.plugin.dot.psi.DotElementType"
+  tokenTypeClass="org.plugin.dot.psi.DotTokenType"
+  psiImplUtilClass="org.plugin.dot.psi.impl.DotPsiImplUtil"
+
+tokens=[
+      DIGRAPH_ = "regexp:DIGRAPH|Digraph|digraph"
+      GRAPH_ = "regexp:GRAPH|Graph|graph"
+      EDGE_ = "regexp:EDGE|Edge|edge"
+      NODE_ = "regexp:NODE|node|Node"
+      STRICT_ = "regexp:STRICT|Strict|strict"
+      SUB_GRAPH_ = "regexp:SUBGRAPH|Subgraph|subgraph"
+
+      DOT = "."
+      COMMA = ","
+      COLON = ":"
+      EOS = ";"
+      EQUAL = "="
+      CURLY_BRACKET_RIGHT = "}"
+      CURLY_BRACHET_LEFT = "{"
+      BRACKET_RIGHT = "]"
+      BRACHET_LEFT = "["
+
+      NEWLINE = "regexp:\n"
+      EDGE_OP = "regexp:--|->"
+      COMMENT = 'regexp:(//|#)(.*)(\n)'
+      MULTILINE_COMMENT = 'regexp:/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/'
+      SIMPLE_ID = "regexp:([a-z]|[A-Z])(_|\.|[a-z]|[A-Z]|[0-9])*"
+      QUOTED_ANY = "regexp:(\")([^\"]*)(\")"
+      HTML_ID = "regexp:(<)(.*)(>)"
+      NUMERAL_ID = "regexp:[-]?(.[0-9]+ | [0-9]+(.[0-9]*)? )"
+
+      EXTENDED_ID = "regexp:([a-z]|[A-Z][0-9])(_|\.|[a-z]|[A-Z][0-9])*"
+      LETTERS = "regexp:([a-z]|[A-Z])*"
+      DIGITS = "regexp:([0-9])*"
+
+
+      COMPASS = "regexp:N|n|S|s|W|w|NE|ne|NW|nw|SE|se|_|c"
+
+  ]
+}
+
+dotFile ::= (comment_stmt|dotgraph_stmt|EMPTY)*;
+dotgraph_stmt ::=[ STRICT_ ] (GRAPH_ | DIGRAPH_) [ID] CURLY_BRACHET_LEFT [stmt_list] CURLY_BRACKET_RIGHT
+stmt_list	::=	[stmt [ EOS ] stmt_list];
+
+stmt	::=	 edge_stmt|  sub_graph |attr_stmt| ID EQUAL ID| node_stmt| comment_stmt;
+attr_stmt	::=	(GRAPH_ | NODE_ | EDGE_) attr_list | comment_stmt;
+attr_list	::=	BRACHET_LEFT [ a_list ] BRACKET_RIGHT [ attr_list ];
+a_list	::=	ID "=" ID [ (EOS | COMMA) ] [ a_list ] | comment_stmt;
+comment_stmt ::=  MULTILINE_COMMENT | COMMENT;
+
+ID::=SIMPLE_ID | QUOTED_ANY | HTML_ID | NUMERAL_ID
+{
+    mixin="org.plugin.dot.psi.impl.DotNamedElementImpl"
+    implements="org.plugin.dot.DotNamedElement"
+    methods=[getName setName getNameIdentifier getPresentation]
+};
+
+edge_stmt	::=	 (node_id | sub_graph) edgeRHS [ attr_list ];
+edgeRHS	::=	EDGE_OP (node_id | sub_graph) [ edgeRHS ];
+node_stmt	::=	node_id [ attr_list ];
+node_id	::=	ID [ port ];
+port	::=	COLON ID [ COLON compass_pt ]|	COLON compass_pt;
+sub_graph	::=	[ SUB_GRAPH_ [ ID ] ] CURLY_BRACHET_LEFT stmt_list CURLY_BRACKET_RIGHT;
+compass_pt	::=	COMPASS
+
+EOL ::= "\n"
+character ::=  LETTERS | DIGITS | symbol ;
+//letter  ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+//digit   ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+symbol  ::=  "|" | " " | "!" | "#" | "$" | "%" | "&" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "{" | "}"
+
