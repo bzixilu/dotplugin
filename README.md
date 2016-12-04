@@ -21,5 +21,5 @@ Project author:
 
 # License
 
-All files in this repository are released under the Apache 2.0 License.
+All files in this repository are released under the [Apache 2.0 License](https://github.com/bzixilu/dotplugin/blob/master/LICENSE).
 
