@@ -28,6 +28,8 @@ public class DotFormattingModelBuilder implements FormattingModelBuilder {
                 // spaces are expected in the cases
                 .around(DotTypes.EDGE_RHS)
                 .spaces(1)
+                .around(DotTypes.EDGE_OP)
+                .spaces(1)
                 .before(DotTypes.ATTR_LIST)
                 .spaces(1)
                 .before(DotTypes.CURLY_BRACHET_LEFT)
