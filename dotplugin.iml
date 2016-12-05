@@ -9,6 +9,8 @@
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/org" isTestSource="false" packagePrefix="org" />
       <sourceFolder url="file://$MODULE_DIR$/gen/org" isTestSource="false" packagePrefix="org" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/testData" type="java-test-resource" />
     </content>
     <content url="file://$MODULE_DIR$/../intellij-sdk-docs/code_samples/simple_language_plugin">
       <sourceFolder url="file://$MODULE_DIR$/../intellij-sdk-docs/code_samples/simple_language_plugin" type="java-resource" />

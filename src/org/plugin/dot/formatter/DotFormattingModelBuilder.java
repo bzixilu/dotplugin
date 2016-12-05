@@ -25,8 +25,27 @@ public class DotFormattingModelBuilder implements FormattingModelBuilder {
 
     private static SpacingBuilder createSpaceBuilder(CodeStyleSettings settings) {
         return new SpacingBuilder(settings, DotLanguage.INSTANCE)
-                .around(DotTypes.EDGE_OP)
-                .spaceIf(settings.SPACE_AROUND_ASSIGNMENT_OPERATORS);
+                // spaces are expected in the cases
+                .around(DotTypes.EDGE_RHS)
+                .spaces(1)
+                .before(DotTypes.ATTR_LIST)
+                .spaces(1)
+                .before(DotTypes.CURLY_BRACHET_LEFT)
+                .spaces(1)
+                .before(DotTypes.BRACHET_LEFT)
+                .spaces(1)
+                .after(DotTypes.EOS)
+                .spaces(1)
+                .after(DotTypes.COMMENT)
+                .spaces(1)
+
+                // spaces are NOT expected in the cases
+                .around(DotTypes.EQUAL)
+                .none()
+                .before(DotTypes.EOS)
+                .none()
+                .around(DotTypes.COLON)
+                .none();
 
     }
 

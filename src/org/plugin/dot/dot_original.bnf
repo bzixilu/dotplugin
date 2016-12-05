@@ -72,7 +72,7 @@ edge_stmt	::=	 (node_id | sub_graph) edgeRHS [ attr_list ];
 edgeRHS	::=	EDGE_OP (node_id | sub_graph) [ edgeRHS ];
 node_stmt	::=	node_id [ attr_list ];
 node_id	::=	ID [ port ];
-port	::=	COLON ID [ COLON compass_pt ]|	COLON compass_pt;
+port	::=	COLON ID [ COLON compass_pt ] |	COLON compass_pt;
 sub_graph	::=	[ SUB_GRAPH_ [ ID ] ] CURLY_BRACHET_LEFT stmt_list CURLY_BRACKET_RIGHT;
 compass_pt	::=	COMPASS
 
