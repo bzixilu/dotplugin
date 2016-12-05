@@ -1,4 +1,4 @@
-package org.plugin.dot.contributor;
+package org.plugin.dot.contributors;
 
 import com.intellij.navigation.*;
 import com.intellij.openapi.project.Project;

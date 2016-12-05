@@ -1,8 +1,10 @@
-package org.plugin.dot;
+package org.plugin.dot.filetypes;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.plugin.dot.DotIcons;
+import org.plugin.dot.DotLanguage;
 
 import javax.swing.*;
 

@@ -1,19 +1,16 @@
-package org.plugin.dot.contributor;
+package org.plugin.dot.contributors;
 
 import com.intellij.openapi.util.TextRange;
-import com.intellij.patterns.PlatformPatterns;
 import com.intellij.patterns.StandardPatterns;
 import com.intellij.psi.*;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 import org.plugin.dot.DotPSITreeUtil;
-import org.plugin.dot.psi.DotFile;
 import org.plugin.dot.psi.DotId;
 import org.plugin.dot.DotReference;
 import org.plugin.dot.psi.impl.DotIdImpl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DotReferenceContributor extends PsiReferenceContributor {

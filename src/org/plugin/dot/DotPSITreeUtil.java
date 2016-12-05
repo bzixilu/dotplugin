@@ -8,8 +8,8 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiRecursiveElementVisitor;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.indexing.FileBasedIndex;
+import org.plugin.dot.filetypes.DotFileType;
 import org.plugin.dot.psi.DotEdgeStmt;
 import org.plugin.dot.psi.DotFile;
 import org.plugin.dot.psi.DotId;
@@ -17,7 +17,6 @@ import org.plugin.dot.psi.DotNodeStmt;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

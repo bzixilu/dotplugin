@@ -25,8 +25,8 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="org.plugin.dot.DotFileTypeFactory"/>
-        <fileTypeFactory implementation="org.plugin.dot.GVFileTypeFactory"/>
+        <fileTypeFactory implementation="org.plugin.dot.filetypes.DotFileTypeFactory"/>
+        <fileTypeFactory implementation="org.plugin.dot.filetypes.GVFileTypeFactory"/>
         <lang.parserDefinition language="Dot" implementationClass="org.plugin.dot.DotParserDefinition"/>
         <lang.syntaxHighlighterFactory key="Dot" implementationClass="org.plugin.dot.highlighter.DotSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="org.plugin.dot.DotColorSettingsPage"/>
@@ -34,10 +34,11 @@
         <lang.commenter language="Dot" implementationClass="org.plugin.dot.DotCommenter"/>
         <codeStyleSettingsProvider implementation="org.plugin.dot.codestyle.DotCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider implementation="org.plugin.dot.codestyle.DotLanguageCodeStyleSettingsProvider"/>
-        <psi.referenceContributor implementation="org.plugin.dot.contributor.DotReferenceContributor"/>
+        <psi.referenceContributor implementation="org.plugin.dot.contributors.DotReferenceContributor"/>
         <lang.refactoringSupport language="Dot" implementationClass="org.plugin.dot.DotRefactoringSupportProvider"/>
         <lang.findUsagesProvider language="Dot" implementationClass="org.plugin.dot.DotFindUsagesProvider"/>
-        <gotoSymbolContributor implementation="org.plugin.dot.contributor.DotChooseByNameContributor"/>
+        <gotoSymbolContributor implementation="org.plugin.dot.contributors.DotChooseByNameContributor"/>
+        <lang.formatter language="Dot" implementationClass="org.plugin.dot.formatter.DotFormattingModelBuilder"/>
     </extensions>
 
     <actions>

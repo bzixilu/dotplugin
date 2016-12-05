@@ -2,8 +2,7 @@ package org.plugin.dot.psi;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
-import com.intellij.psi.tree.IElementType;
-import org.plugin.dot.DotFileType;
+import org.plugin.dot.filetypes.DotFileType;
 
 public class DotElementFactory {
 

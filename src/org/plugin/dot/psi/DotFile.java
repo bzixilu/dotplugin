@@ -4,7 +4,7 @@ import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
 import org.jetbrains.annotations.NotNull;
-import org.plugin.dot.DotFileType;
+import org.plugin.dot.filetypes.DotFileType;
 import org.plugin.dot.DotLanguage;
 
 import javax.swing.*;
