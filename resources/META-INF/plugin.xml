@@ -34,11 +34,11 @@
         <lang.commenter language="Dot" implementationClass="org.plugin.dot.DotCommenter"/>
         <codeStyleSettingsProvider implementation="org.plugin.dot.codestyle.DotCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider implementation="org.plugin.dot.codestyle.DotLanguageCodeStyleSettingsProvider"/>
-        <psi.referenceContributor implementation="org.plugin.dot.contributors.DotReferenceContributor"/>
-        <lang.refactoringSupport language="Dot" implementationClass="org.plugin.dot.DotRefactoringSupportProvider"/>
-        <lang.findUsagesProvider language="Dot" implementationClass="org.plugin.dot.DotFindUsagesProvider"/>
-        <gotoSymbolContributor implementation="org.plugin.dot.contributors.DotChooseByNameContributor"/>
-        <lang.formatter language="Dot" implementationClass="org.plugin.dot.formatter.DotFormattingModelBuilder"/>
+        <!--psi.referenceContributor implementation="org.plugin.dot.contributors.DotReferenceContributor"/-->
+        <!--lang.refactoringSupport language="Dot" implementationClass="org.plugin.dot.DotRefactoringSupportProvider"/-->
+        <!--lang.findUsagesProvider language="Dot" implementationClass="org.plugin.dot.DotFindUsagesProvider"/-->
+        <!--gotoSymbolContributor implementation="org.plugin.dot.contributors.DotChooseByNameContributor"/-->
+        <!--lang.formatter language="Dot" implementationClass="org.plugin.dot.formatter.DotFormattingModelBuilder"/-->
     </extensions>
 
     <actions>
