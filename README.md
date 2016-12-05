@@ -6,12 +6,7 @@ Dot language plugin for Intellij IDEA
 ![alt text](https://github.com/bzixilu/dotplugin/blob/master/src/org/plugin/dot/icons/dot_example.png "Dot language support in Intellij IDEA")
 
 This plugin provides basic editing support for dot language files (dot and gv) in IntelliJ IDEA. 
-At the moment, the following support is provided:
-
-* dot language syntax validator
-* syntax dot language hilighting
-* color dot language settings page
-* commenter
+At the moment, just dot language syntax validating and hilightning is provided:
 
 # Credits
 
