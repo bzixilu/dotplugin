@@ -15,13 +15,21 @@ public class DotLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSetti
 
     @Override
     public void customizeSettings(@NotNull CodeStyleSettingsCustomizable consumer, @NotNull SettingsType settingsType) {
-        if (settingsType == SettingsType.SPACING_SETTINGS) {
-            consumer.showStandardOptions("SPACE_AROUND_ASSIGNMENT_OPERATORS");
-            consumer.renameStandardOption("SPACE_AROUND_ASSIGNMENT_OPERATORS", "Separator");
+        if (settingsType == SettingsType.INDENT_SETTINGS) {
+            consumer.showAllStandardOptions();
+        } else if (settingsType == SettingsType.SPACING_SETTINGS) {
+            consumer.showStandardOptions("SPACE_AROUND_ASSIGNMENT_OPERATORS",
+                    "SPACE_AROUND_EQUALITY_OPERATORS",
+                    "SPACE_BEFORE_CLASS_LBRACE",
+                    "SPACE_BEFORE_METHOD_LBRACE",
+                    "SPACE_BEFORE_METHOD_LBRACE",
+                    "SPACE_WITHIN_BRACKETS",
+                    "SPACE_AFTER_SEMICOLON",
+                    "SPACE_BEFORE_SEMICOLON",
+                    "SPACE_AFTER_COLON");
+            consumer.renameStandardOption("SPACE_AROUND_ASSIGNMENT_OPERATORS", "Edge operator");
         } else if (settingsType == SettingsType.BLANK_LINES_SETTINGS) {
             consumer.showStandardOptions("KEEP_BLANK_LINES_IN_CODE");
-        } else if (settingsType == SettingsType.INDENT_SETTINGS) {
-            consumer.showStandardOptions("INDENT_CHILDREN_OF_GRAPH");
         }
     }
 
@@ -37,7 +45,9 @@ public class DotLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSetti
                 "b [shape=box];\n" +
                 "// These edges both have different line properties\n" +
                 "a -- b -- c [color=blue];\n" +
-                "b -- d [style=dotted];\n" +
-                "// [style=invis] hides a node.\n";
+                "b -- d [style=dotted]; [color=red]\n" +
+                "// [style=invis] hides a node.\n" +
+                "}";
     }
+
 }

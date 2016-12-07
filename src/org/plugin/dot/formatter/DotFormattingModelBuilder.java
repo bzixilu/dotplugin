@@ -15,7 +15,7 @@ public class DotFormattingModelBuilder implements FormattingModelBuilder {
     public FormattingModel createModel(PsiElement element, CodeStyleSettings settings) {
         return FormattingModelProvider.createFormattingModelForPsiFile(element.getContainingFile(),
                 new DotBlock(element.getNode(),
-                        Wrap.createWrap(WrapType.NONE,
+                        Wrap.createWrap(WrapType.CHOP_DOWN_IF_LONG,
                                 false),
                         //Alignment.createAlignment(),
                         null,
@@ -25,30 +25,30 @@ public class DotFormattingModelBuilder implements FormattingModelBuilder {
 
     private static SpacingBuilder createSpaceBuilder(CodeStyleSettings settings) {
         return new SpacingBuilder(settings, DotLanguage.INSTANCE)
-                // spaces are expected in the cases
                 .around(DotTypes.EDGE_RHS)
-                .spaces(1)
+                .spaceIf(settings.SPACE_AROUND_EQUALITY_OPERATORS)
                 .around(DotTypes.EDGE_OP)
-                .spaces(1)
+                .spaceIf(settings.SPACE_AROUND_EQUALITY_OPERATORS)
                 .before(DotTypes.ATTR_LIST)
                 .spaces(1)
                 .before(DotTypes.CURLY_BRACHET_LEFT)
-                .spaces(1)
+                .spaceIf(settings.SPACE_BEFORE_CLASS_LBRACE)
                 .before(DotTypes.BRACHET_LEFT)
-                .spaces(1)
+                .spaceIf(settings.SPACE_BEFORE_METHOD_LBRACE)
+                .after(DotTypes.BRACHET_LEFT)
+                .spaceIf(settings.SPACE_WITHIN_BRACKETS)
+                .before(DotTypes.BRACKET_RIGHT)
+                .spaceIf(settings.SPACE_WITHIN_BRACKETS)
                 .after(DotTypes.EOS)
+                .spaceIf(settings.SPACE_AFTER_SEMICOLON)
+                .before(DotTypes.COMMENT)
                 .spaces(1)
-                .after(DotTypes.COMMENT)
-                .spaces(1)
-
-                // spaces are NOT expected in the cases
                 .around(DotTypes.EQUAL)
-                .none()
+                .spaceIf(settings.SPACE_AROUND_ASSIGNMENT_OPERATORS)
                 .before(DotTypes.EOS)
-                .none()
+                .spaceIf(settings.SPACE_BEFORE_SEMICOLON)
                 .around(DotTypes.COLON)
-                .none();
-
+                .spaceIf(settings.SPACE_AFTER_COLON);
     }
 
     @Nullable
