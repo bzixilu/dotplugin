@@ -1,12 +1,12 @@
-<idea-plugin version="2">
-    <id>com.your.company.unique.plugin.id</id>
-    <name>Plugin display name here</name>
+<idea-plugin version="1">
+    <id>org.dot.plugin</id>
+    <name>dotplugin</name>
     <version>1.0</version>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="bzixilu@gmail.com" url="https://github.com/bzixilu/dotplugin">Olga Strizhenko</vendor>
 
     <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+        This plugin provides basic editing support for dot language files (dot and gv) in IntelliJ IDEA.
+        At the moment, just dot language syntax validating and hilightning is provided</em>
     ]]></description>
 
     <change-notes><![CDATA[
@@ -25,8 +25,7 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="org.plugin.dot.filetypes.DotFileTypeFactory"/>
-        <fileTypeFactory implementation="org.plugin.dot.filetypes.GVFileTypeFactory"/>
+        <fileTypeFactory implementation="org.plugin.dot.filetypes.DotFileTypeFactory">
         <lang.parserDefinition language="Dot" implementationClass="org.plugin.dot.DotParserDefinition"/>
         <lang.syntaxHighlighterFactory key="Dot" implementationClass="org.plugin.dot.highlighter.DotSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="org.plugin.dot.DotColorSettingsPage"/>
