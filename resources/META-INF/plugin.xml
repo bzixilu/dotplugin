@@ -1,6 +1,6 @@
-<idea-plugin version="2">
+<idea-plugin version="1">
     <id>org.plugin.dot.id</id>
-    <name>dot_plugin</name>
+    <name>dotplugin</name>
     <version>1.0</version>
     <vendor email="bzixilu@gmail.com">bzixilu</vendor>
 
@@ -28,7 +28,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="org.plugin.dot.filetypes.DotFileTypeFactory"/>
-        <fileTypeFactory implementation="org.plugin.dot.filetypes.GVFileTypeFactory"/>
         <lang.parserDefinition language="Dot" implementationClass="org.plugin.dot.DotParserDefinition"/>
         <lang.syntaxHighlighterFactory key="Dot" implementationClass="org.plugin.dot.highlighter.DotSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="org.plugin.dot.DotColorSettingsPage"/>

@@ -28,6 +28,8 @@ public class DotLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSetti
                     "SPACE_BEFORE_SEMICOLON",
                     "SPACE_AFTER_COLON");
             consumer.renameStandardOption("SPACE_AROUND_ASSIGNMENT_OPERATORS", "Edge operator");
+            consumer.renameStandardOption("SPACE_BEFORE_CLASS_LBRACE", "Space before ...");
+            consumer.renameStandardOption("SPACE_BEFORE_METHOD_LBRACE", "Space before ... 2");
         } else if (settingsType == SettingsType.BLANK_LINES_SETTINGS) {
             consumer.showStandardOptions("KEEP_BLANK_LINES_IN_CODE");
         }

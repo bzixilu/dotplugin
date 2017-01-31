@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
  * </lu>
  */
 public class DotCommenter implements Commenter {
+
     /**
      * Method returns single-line comment prefix: "//"
      *
