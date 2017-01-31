@@ -5,8 +5,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.*;
-import org.plugin.dot.DotIcons;
-import org.plugin.dot.DotPSITreeUtil;
 import org.plugin.dot.psi.DotId;
 
 import java.util.*;
