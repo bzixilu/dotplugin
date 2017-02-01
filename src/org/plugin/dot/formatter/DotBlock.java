@@ -26,7 +26,6 @@ public class DotBlock extends AbstractBlock {
     protected List<Block> buildChildren() {
         List<Block> blocks = new ArrayList<Block>();
         ASTNode child = myNode.getFirstChildNode();
-
         while (child != null) {
             if (child.getElementType() != TokenType.WHITE_SPACE) {
                 Block block = new DotBlock(child, Wrap.createWrap(WrapType.NONE, false), null,
@@ -67,6 +66,28 @@ public class DotBlock extends AbstractBlock {
             return Indent.getSpaceIndent(4);
         }
         return Indent.getNoneIndent();
+    }
+
+    @Override
+    public Wrap getWrap() {
+        ASTNode myParent = myNode.getTreeParent();
+        if(myParent != null  && myParent.getElementType().equals(DotTypes.STMT_LIST)){
+            return Wrap.createWrap(WrapType.ALWAYS, false);
+        }
+        return Wrap.createWrap(WrapType.NONE, false);
+    }
+
+    @Override
+    public boolean isIncomplete() {
+        // TODO: it's placed here to resolve problem with indentation of cursor in new line
+        // But it should be implemented in proper way
+        return false;
+    }
+
+    @NotNull
+    @Override
+    public ChildAttributes getChildAttributes(int newChildIndex) {
+        return new ChildAttributes(Indent.getNoneIndent(), null);
     }
 
     @Nullable
