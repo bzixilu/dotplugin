@@ -1,17 +1,19 @@
-<idea-plugin version="2">
-    <id>com.your.company.unique.plugin.id</id>
-    <name>Plugin display name here</name>
+<idea-plugin version="1">
+    <id>org.plugin.dot.id</id>
+    <name>dotplugin</name>
     <version>1.0</version>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="bzixilu@gmail.com">bzixilu</vendor>
 
     <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      This plugin provides basic editing support for dot language files (dot and gv) in IntelliJ IDEA
     ]]></description>
 
     <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      <h3> Changes: </h3>
+      <ul>
+      <li> dot language syntax validating </li>
+      <li> dot language syntax highlightning </li>
+      </ul>
     ]]>
     </change-notes>
 
@@ -26,7 +28,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="org.plugin.dot.filetypes.DotFileTypeFactory"/>
-        <fileTypeFactory implementation="org.plugin.dot.filetypes.GVFileTypeFactory"/>
         <lang.parserDefinition language="Dot" implementationClass="org.plugin.dot.DotParserDefinition"/>
         <lang.syntaxHighlighterFactory key="Dot" implementationClass="org.plugin.dot.highlighter.DotSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="org.plugin.dot.DotColorSettingsPage"/>
@@ -38,7 +39,7 @@
         <!--lang.refactoringSupport language="Dot" implementationClass="org.plugin.dot.DotRefactoringSupportProvider"/-->
         <!--lang.findUsagesProvider language="Dot" implementationClass="org.plugin.dot.DotFindUsagesProvider"/-->
         <!--gotoSymbolContributor implementation="org.plugin.dot.contributors.DotChooseByNameContributor"/-->
-        <!--lang.formatter language="Dot" implementationClass="org.plugin.dot.formatter.DotFormattingModelBuilder"/-->
+        <lang.formatter language="Dot" implementationClass="org.plugin.dot.formatter.DotFormattingModelBuilder"/>
     </extensions>
 
     <actions>

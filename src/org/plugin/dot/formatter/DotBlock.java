@@ -2,6 +2,7 @@ package org.plugin.dot.formatter;
 
 import com.intellij.formatting.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.formatter.common.AbstractBlock;
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +15,7 @@ import org.plugin.dot.psi.impl.DotDotgraphStmtImpl;
 import org.plugin.dot.psi.impl.DotStmtListImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DotBlock extends AbstractBlock {
@@ -48,15 +50,12 @@ public class DotBlock extends AbstractBlock {
             return Indent.getNoneIndent();
         }
         if(myNode.getElementType().equals(DotTypes.DOTGRAPH_STMT)){
-            this.setBuildIndentsOnly(true);
             return Indent.getNoneIndent();
         }
-        if (myNode.getTreeParent() != null && myNode.getTreeParent().getElementType()==DotTypes.DOTGRAPH_STMT){
-            if(myNode.getElementType()==DotTypes.CURLY_BRACHET_LEFT | myNode.getElementType() == DotTypes.CURLY_BRACKET_RIGHT){
-                return Indent.getNoneIndent();
-            }
-            return Indent.getNormalIndent(true);
+        if (myNode.getElementType().equals(DotTypes.STMT)){
+            return Indent.getNormalIndent(false);
         }
+        // TODO: comment are not intended
         return Indent.getNoneIndent();
     }
 

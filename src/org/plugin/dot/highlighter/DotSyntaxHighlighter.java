@@ -5,7 +5,6 @@ import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
-import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.plugin.dot.DotLexerAdapter;
@@ -73,8 +72,6 @@ public class DotSyntaxHighlighter extends SyntaxHighlighterBase {
             return EDGE_OP_KEYS;
         } else if (tokenType.equals(DotTypes.COMMENT) | tokenType.equals(DotTypes.MULTILINE_COMMENT)) {
             return COMMENT_KEYS;
-//    } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
-//      return BAD_CHAR_KEYS;
         } else {
             return EMPTY_KEYS;
         }
