@@ -164,7 +164,7 @@ public class DotParserDefinition implements ParserDefinition {
      */
     @NotNull
     public TokenSet getCommentTokens() {
-        return getCommentTokens();
+        return getCOMMENTS();
     }
 
     /**
