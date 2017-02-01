@@ -15,7 +15,7 @@ public class DotFormattingModelBuilder implements FormattingModelBuilder {
     public FormattingModel createModel(PsiElement element, CodeStyleSettings settings) {
         return FormattingModelProvider.createFormattingModelForPsiFile(element.getContainingFile(),
                 new DotBlock(element.getNode(),
-                        Wrap.createWrap(WrapType.CHOP_DOWN_IF_LONG,
+                        Wrap.createWrap(WrapType.NONE,
                                 false),
                         //Alignment.createAlignment(),
                         null,
