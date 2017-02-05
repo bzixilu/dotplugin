@@ -1,0 +1,8 @@
+digraph structs {
+        node[shape=record]
+        struct1 [label="<f0> left|<f1> mid\ dle|<f2> right"];
+        struct2 [label="{<f0> one|<f1> two\n\n\n}" shape=Mrecord];
+        struct3 [label="hello\nworld |{ b |{c|<here> d|e}| f}| g | h"];
+        struct1:f1 -> struct2:f0;
+        struct1:f0 -> struct3:f1;
+}

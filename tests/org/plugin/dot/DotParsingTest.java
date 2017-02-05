@@ -27,6 +27,17 @@ public class DotParsingTest extends ParsingTestCase {
     doTest(false);
   }
 
+  public void testStructsTestData() {
+    doTest(false);
+  }
+
+  public void testHtmlIdTestData() {
+    doTest(false);
+  }
+
+  public void testQuotedAnyTestData() {
+    doTest(false);
+  }
 
   @Override
   protected String getTestDataPath() {
