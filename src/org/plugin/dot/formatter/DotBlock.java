@@ -2,6 +2,7 @@ package org.plugin.dot.formatter;
 
 import com.intellij.formatting.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.formatter.common.AbstractBlock;
 import com.intellij.psi.tree.IElementType;
@@ -63,8 +64,9 @@ public class DotBlock extends AbstractBlock {
             if(myNode.getElementType().equals(DotTypes.CURLY_BRACKET_RIGHT)){
                 return Indent.getNoneIndent();
             }
-            return Indent.getSpaceIndent(4);
+            return Indent.getSpaceIndent(4)
         }
+        // TODO: comment are not intended
         return Indent.getNoneIndent();
     }
 
