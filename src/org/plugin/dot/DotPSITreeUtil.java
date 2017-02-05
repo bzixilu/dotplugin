@@ -25,10 +25,11 @@ import java.util.Set;
 public class DotPSITreeUtil extends GeneratedParserUtilBase {
 
     /**
-     * Utility method returned all children nodes which have are mentioned in
+     * Utility method returning all children nodes which have are mentioned in
      * edge statements but not mentioned in node statements.
      * Case when node is used in edge but not initialized earlier
-     * @param e - PSI element (root element for sub tree  for searching nodes)
+     *
+     * @param e - PSI element (root element for sub tree for searching nodes)
      * @return - iterable entity containing used but mentioned nodes
      */
     // TODO: probably it makes sense to change PsiElement to GraphStmt
@@ -50,14 +51,21 @@ public class DotPSITreeUtil extends GeneratedParserUtilBase {
         };
         psiRecursiveElementVisitor.visitElement(e);
 
-        for(DotId edgeId: edgeIds){
-            if (nodeIds.stream().noneMatch((i) -> edgeId.getText().equals(i.getText()))){
+        for (DotId edgeId : edgeIds) {
+            if (nodeIds.stream().noneMatch((i) -> edgeId.getText().equals(i.getText()))) {
                 result.add(edgeId);
             }
         }
         return result;
     }
 
+    /**
+     * Utility method returning all DotIDs with corresponding id the project.
+     *
+     * @param project - project for searching
+     * @param id_     - DotId id for searching
+     * @return iterable set of DotIds naming as id
+     */
     public static Iterable<DotId> findDotIds(Project project, String id_) {
         Set<DotId> ids = new HashSet<>();
         PsiRecursiveElementVisitor psiRecursiveElementVisitor = new PsiRecursiveElementVisitor() {
@@ -75,7 +83,7 @@ public class DotPSITreeUtil extends GeneratedParserUtilBase {
         for (VirtualFile virtualFile : virtualFiles) {
             DotFile dotFile = (DotFile) PsiManager.getInstance(project).findFile(virtualFile);
             if (dotFile != null) {
-                for (PsiElement e: dotFile.getChildren()) {
+                for (PsiElement e : dotFile.getChildren()) {
                     psiRecursiveElementVisitor.visitElement(e);
                 }
             }
@@ -83,6 +91,12 @@ public class DotPSITreeUtil extends GeneratedParserUtilBase {
         return ids;
     }
 
+    /**
+     * Utility method returning all DotIDs in the project
+     *
+     * @param project project for searching
+     * @return iterable set of all DotIds in project
+     */
     public static Iterable<DotId> findDotIds(Project project) {
         Set<DotId> ids = new HashSet<>();
         PsiRecursiveElementVisitor psiRecursiveElementVisitor = new PsiRecursiveElementVisitor() {
@@ -100,7 +114,7 @@ public class DotPSITreeUtil extends GeneratedParserUtilBase {
         for (VirtualFile virtualFile : virtualFiles) {
             DotFile dotFile = (DotFile) PsiManager.getInstance(project).findFile(virtualFile);
             if (dotFile != null) {
-                for (PsiElement e: dotFile.getChildren()) {
+                for (PsiElement e : dotFile.getChildren()) {
                     psiRecursiveElementVisitor.visitElement(e);
                 }
             }

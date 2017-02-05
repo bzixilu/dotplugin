@@ -39,7 +39,7 @@ tokens=[
       SIMPLE_ID = "regexp:([a-z]|[A-Z])(_|\.|[a-z]|[A-Z]|[0-9])*"
       QUOTED_ANY = "regexp:(\")([^\"]*)(\")"
       HTML_ID = "regexp:(<)(.*)(>)"
-      NUMERAL_ID = "regexp:[-]?(.[0-9]+ | [0-9]+(.[0-9]*)? )"
+      NUMERAL_ID = "regexp:[-]?(\.[0-9]+ | [0-9]+(\.[0-9]*)? )"
 
       EXTENDED_ID = "regexp:([a-z]|[A-Z][0-9])(_|\.|[a-z]|[A-Z][0-9])*"
       LETTERS = "regexp:([a-z]|[A-Z])*"
@@ -72,7 +72,7 @@ edge_stmt	::=	 (node_id | sub_graph) edgeRHS [ attr_list ];
 edgeRHS	::=	EDGE_OP (node_id | sub_graph) [ edgeRHS ];
 node_stmt	::=	node_id [ attr_list ];
 node_id	::=	ID [ port ];
-port	::=	COLON ID [ COLON compass_pt ]|	COLON compass_pt;
+port	::=	COLON ID [ COLON compass_pt ] |	COLON compass_pt;
 sub_graph	::=	[ SUB_GRAPH_ [ ID ] ] CURLY_BRACHET_LEFT stmt_list CURLY_BRACKET_RIGHT;
 compass_pt	::=	COMPASS
 
