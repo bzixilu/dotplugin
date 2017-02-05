@@ -5,7 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import org.plugin.dot.DotNamedElement;
-import com.intellij.navigation.ItemPresentation;
 
 public interface DotId extends DotNamedElement {
 
@@ -20,13 +19,5 @@ public interface DotId extends DotNamedElement {
 
   @Nullable
   PsiElement getSimpleId();
-
-  String getName();
-
-  PsiElement setName(String newName);
-
-  PsiElement getNameIdentifier();
-
-  ItemPresentation getPresentation();
 
 }

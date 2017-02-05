@@ -11,6 +11,34 @@ public class DotParsingTest extends ParsingTestCase {
     doTest(true);
   }
 
+  public void testNumeralIDTestData() {
+    doTest(true);
+  }
+
+  public void testBigOneTestData() {
+    doTest(false);
+  }
+
+  public void testGroupedNodesTestData() {
+    doTest(false);
+  }
+
+  public void testSubgraphTestData() {
+    doTest(false);
+  }
+
+  public void testStructsTestData() {
+    doTest(false);
+  }
+
+  public void testHtmlIdTestData() {
+    doTest(false);
+  }
+
+  public void testQuotedAnyTestData() {
+    doTest(false);
+  }
+
   @Override
   protected String getTestDataPath() {
     return "testData";

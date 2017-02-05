@@ -7,6 +7,7 @@ import static org.plugin.dot.psi.DotTypes.*;
 import static org.plugin.dot.DotPSITreeUtil.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.tree.TokenSet;
 import com.intellij.lang.PsiParser;
 import com.intellij.lang.LightPsiParser;
 
@@ -439,7 +440,7 @@ public class DotParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // COLON ID [ COLON compass_pt ]|	COLON compass_pt
+  // COLON ID [ COLON compass_pt ] |	COLON compass_pt
   public static boolean port(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "port")) return false;
     if (!nextTokenIs(b, COLON)) return false;
