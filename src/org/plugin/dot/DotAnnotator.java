@@ -31,7 +31,7 @@ public class DotAnnotator implements Annotator {
         if (element instanceof DotDotgraphStmtImpl) {
             for (DotId id : getNotMentionedNodeIds(element)) {
                 TextRange range = new TextRange(id.getTextRange().getStartOffset(),
-                        id.getTextRange().getStartOffset());
+                        id.getTextRange().getEndOffset());
                 Annotation annotation = holder.createInfoAnnotation(range, "No such such node specified in graph");
                 annotation.setHighlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL);
             }
