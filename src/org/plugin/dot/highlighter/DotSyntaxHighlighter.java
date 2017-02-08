@@ -15,7 +15,7 @@ import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAtt
 public class DotSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey VAR =
             createTextAttributesKey("NUMERIC_VAR", DefaultLanguageHighlighterColors.GLOBAL_VARIABLE);
-    public static final TextAttributesKey NUMERIC =
+    private static final TextAttributesKey NUMERIC =
             createTextAttributesKey("DOT_VAR", DefaultLanguageHighlighterColors.NUMBER);
     public static final TextAttributesKey KEYWORD =
             createTextAttributesKey("DOT_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
@@ -23,7 +23,7 @@ public class DotSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("DOT_EDGE_OP", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey COMMENT =
             createTextAttributesKey("DOT_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
-    public static final TextAttributesKey BAD_CHARACTER =
+    private static final TextAttributesKey BAD_CHARACTER =
             createTextAttributesKey("DOT_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
     public static final TextAttributesKey COMPASS_KEY =
             createTextAttributesKey("DOT_COMPASS", DefaultLanguageHighlighterColors.CONSTANT);
@@ -46,6 +46,11 @@ public class DotSyntaxHighlighter extends SyntaxHighlighterBase {
         return new DotLexerAdapter();
     }
 
+    /**
+     * The methods determines the text attributes for the token provided as arg
+     * @param tokenType
+     * @return text attributes required to highlight the corresponding token
+     */
     @NotNull
     @Override
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {

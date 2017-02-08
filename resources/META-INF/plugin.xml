@@ -12,7 +12,8 @@
       <h3> Changes: </h3>
       <ul>
       <li> dot language syntax validating </li>
-      <li> dot language syntax highlightning </li>
+      <li> dot language syntax highlighting </li>
+      <li> dot language reformatting </li>
       </ul>
     ]]>
     </change-notes>

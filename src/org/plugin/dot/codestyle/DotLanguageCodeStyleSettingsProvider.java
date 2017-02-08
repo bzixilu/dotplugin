@@ -35,6 +35,12 @@ public class DotLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSetti
         }
     }
 
+    /**
+     * The method provides demo text, used as demo in color settings page for color scheme
+     * demonstration
+     *
+     * @return string
+     */
     @Override
     public String getCodeSample(@NotNull SettingsType settingsType) {
         return "# You are reading the \".dot or .gv\" entry.\n" +

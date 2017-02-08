@@ -61,10 +61,11 @@ attr_list	::=	BRACHET_LEFT [ a_list ] BRACKET_RIGHT [ attr_list ];
 a_list	::=	ID "=" ID [ (EOS | COMMA) ] [ a_list ] | comment_stmt;
 comment_stmt ::=  MULTILINE_COMMENT | COMMENT;
 
-ID::=SIMPLE_ID | QUOTED_ANY | HTML_ID | NUMERAL_ID
-{
+ID::=SIMPLE_ID | QUOTED_ANY | HTML_ID | NUMERAL_ID{
+    pin=3
+    recoverWhile="recover_property"
     mixin="org.plugin.dot.psi.impl.DotNamedElementImpl"
-    implements="org.plugin.dot.DotNamedElement"
+    implements="org.plugin.dot.psi.DotNamedElement"
     methods=[getName setName getNameIdentifier getPresentation]
 };
 

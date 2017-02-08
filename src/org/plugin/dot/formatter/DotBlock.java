@@ -2,30 +2,27 @@ package org.plugin.dot.formatter;
 
 import com.intellij.formatting.*;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.formatter.common.AbstractBlock;
-import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.plugin.dot.psi.DotTypes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DotBlock extends AbstractBlock {
     private SpacingBuilder spacingBuilder;
 
-    protected DotBlock(@NotNull ASTNode node, @Nullable Wrap wrap, @Nullable Alignment alignment,
-                       SpacingBuilder spacingBuilder) {
+    DotBlock(@NotNull ASTNode node, @Nullable Wrap wrap, @Nullable Alignment alignment,
+             SpacingBuilder spacingBuilder) {
         super(node, wrap, alignment);
         this.spacingBuilder = spacingBuilder;
     }
 
     @Override
     protected List<Block> buildChildren() {
-        List<Block> blocks = new ArrayList<Block>();
+        List<Block> blocks = new ArrayList<>();
         ASTNode child = myNode.getFirstChildNode();
         while (child != null) {
             if (child.getElementType() != TokenType.WHITE_SPACE) {
