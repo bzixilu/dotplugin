@@ -2,7 +2,8 @@ package org.plugin.dot.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.Nullable;
 import org.plugin.dot.DotIcons;
 import org.plugin.dot.psi.DotElementFactory;
@@ -28,9 +29,11 @@ public class DotPsiImplUtil {
     return getNotNullId(element).getText();
   }
 
+
   public static PsiElement setName(DotId element, String newName){
     if (element != null) {
       ASTNode id = DotElementFactory.createDotId(element.getProject(), newName).getNode();
+      // here it's assumed that there is a parent
       element.getNode().getTreeParent().replaceChild(element.getNode(), id);
       return id.getPsi();
     }

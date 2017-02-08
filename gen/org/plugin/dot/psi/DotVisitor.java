@@ -4,7 +4,6 @@ package org.plugin.dot.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
-import org.plugin.dot.DotNamedElement;
 
 public class DotVisitor extends PsiElementVisitor {
 

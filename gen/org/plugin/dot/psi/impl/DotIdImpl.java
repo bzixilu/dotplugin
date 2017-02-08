@@ -9,6 +9,7 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.plugin.dot.psi.DotTypes.*;
 import org.plugin.dot.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
 public class DotIdImpl extends DotNamedElementImpl implements DotId {
 
@@ -49,13 +50,20 @@ public class DotIdImpl extends DotNamedElementImpl implements DotId {
     return findChildByType(SIMPLE_ID);
   }
 
-  @Override
-  public PsiElement setName(String newName) {
-    return null;
+  public String getName() {
+    return DotPsiImplUtil.getName(this);
   }
 
-  @Override
-  public PsiElement getNameIdentifier() {
-    return null;
+  public PsiElement setName(String newName) {
+    return DotPsiImplUtil.setName(this, newName);
   }
+
+  public PsiElement getNameIdentifier() {
+    return DotPsiImplUtil.getNameIdentifier(this);
+  }
+
+  public ItemPresentation getPresentation() {
+    return DotPsiImplUtil.getPresentation(this);
+  }
+
 }
