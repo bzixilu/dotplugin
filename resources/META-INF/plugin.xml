@@ -1,4 +1,4 @@
-<idea-plugin version="1">
+<idea-plugin url="https://github.com/bzixilu/dotplugin">
     <id>org.plugin.dot.id</id>
     <name>dotplugin</name>
     <version>1.0</version>
@@ -8,7 +8,7 @@
       This plugin provides basic editing support for dot language files (dot and gv) in IntelliJ IDEA
     ]]></description>
 
-    <change-notes><![CDATA[
+<!--    <change-notes><![CDATA[
       <h3> Changes: </h3>
       <ul>
       <li> dot language syntax validating </li>
@@ -16,7 +16,7 @@
       <li> dot language reformatting </li>
       </ul>
     ]]>
-    </change-notes>
+    </change-notes>-->
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="141.0"/>
