@@ -33,7 +33,7 @@ public class DotPSITreeUtil extends GeneratedParserUtilBase {
      * @return - iterable entity containing used but mentioned nodes
      */
     // TODO: probably it makes sense to change PsiElement to GraphStmt
-    public static Iterable<DotId> getNotMentionedNodeIds(PsiElement e) {
+    static Iterable<DotId> getNotMentionedNodeIds(PsiElement e) {
         Set<DotId> nodeIds = new HashSet<>();
         Set<DotId> edgeIds = new HashSet<>();
         Set<DotId> result = new HashSet<>();
