@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/bzixilu/dotplugin">
     <id>org.plugin.dot.id</id>
     <name>dotplugin</name>
-    <version>1.0</version>
+    <version>1.1</version>
     <vendor email="bzixilu@gmail.com">bzixilu</vendor>
 
     <description><![CDATA[
