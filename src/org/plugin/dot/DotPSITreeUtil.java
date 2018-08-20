@@ -10,10 +10,7 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.indexing.FileBasedIndex;
 import org.plugin.dot.filetypes.DotFileType;
-import org.plugin.dot.psi.DotEdgeStmt;
-import org.plugin.dot.psi.DotFile;
-import org.plugin.dot.psi.DotId;
-import org.plugin.dot.psi.DotNodeStmt;
+import org.plugin.dot.psi.*;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -43,8 +40,14 @@ public class DotPSITreeUtil extends GeneratedParserUtilBase {
                 if (element instanceof DotNodeStmt) {
                     nodeIds.add(((DotNodeStmt) element).getNodeId().getId());
                 } else if (element instanceof DotEdgeStmt) {
-                    edgeIds.add(((DotEdgeStmt) element).getNodeId().getId());
-                    edgeIds.add(((DotEdgeStmt) element).getEdgeRHS().getNodeId().getId());
+                    final DotNodeId leftNode = ((DotEdgeStmt) element).getNodeId();
+                    if (leftNode != null) {
+                        edgeIds.add(leftNode.getId());
+                    }
+                    final DotNodeId nodeId = ((DotEdgeStmt) element).getEdgeRHS().getNodeId();
+                    if (nodeId != null) {
+                        edgeIds.add(nodeId.getId());
+                    }
                 }
                 super.visitElement(element);
             }
