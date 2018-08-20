@@ -37,6 +37,7 @@
         <!--lang.findUsagesProvider language="Dot" implementationClass="org.plugin.dot.DotFindUsagesProvider"/-->
         <!--gotoSymbolContributor implementation="org.plugin.dot.contributors.DotChooseByNameContributor"/-->
         <lang.formatter language="Dot" implementationClass="org.plugin.dot.formatter.DotFormattingModelBuilder"/>
+        <spellchecker.support language="Dot" implementationClass="org.plugin.dot.spellchecker.DotSpellcheckingStrategy"/>
     </extensions>
 
     <actions>

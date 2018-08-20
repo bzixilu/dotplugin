@@ -1,0 +1,9 @@
+digraph
+    {
+    "<TYPO descr="Typo: In word 'typpppo'">typpppo</TYPO>" -> {"bot8"};
+
+
+// comment with <TYPO descr="Typo: In word 'typpppo'">typpppo</TYPO>
+
+/* yet another comment with <TYPO descr="Typo: In word 'typppppo'">typppppo</TYPO> */
+}
