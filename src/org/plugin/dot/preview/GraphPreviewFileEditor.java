@@ -98,8 +98,12 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
 
         BufferedImage bufferedImage;
         private VirtualFile image;
+        final JLabel noPreviewIsAvailable;
 
         public ImagePanel() {
+            noPreviewIsAvailable = new JLabel("No preview is available");
+            add(noPreviewIsAvailable);
+            noPreviewIsAvailable.setVisible(false);
         }
 
         public void addImage(VirtualFile image) {
@@ -113,8 +117,9 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                     try (InputStream dot = image.getInputStream()) {
                         Graphviz graphviz = Graphviz.fromGraph(new Parser().read(dot));
                         bufferedImage = graphviz.width(this.getWidth() - 100).height(this.getHeight() - 100).render(Format.PNG).toImage();
+                        noPreviewIsAvailable.setVisible(false);
                     } catch (IOException | ParserException | GraphvizException e) {
-                        add(new JLabel("No preview is available"));
+                        noPreviewIsAvailable.setVisible(true);
                     }
                 }
                 if (bufferedImage != null) {
@@ -127,8 +132,6 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
 
         @Override
         public void dispose() {
-            bufferedImage = null;
-            image = null;
         }
     }
 }
