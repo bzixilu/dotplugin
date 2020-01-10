@@ -3,6 +3,10 @@ package org.plugin.dot.preview;
 
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.event.DocumentEvent;
+import com.intellij.openapi.editor.event.DocumentListener;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.FileEditorState;
@@ -10,6 +14,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.components.JBPanel;
+import com.intellij.util.Alarm;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizException;
@@ -26,11 +31,30 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEditor {
+    private final static long PARSING_CALL_TIMEOUT_MS = 50L;
+    @NotNull
+    private final Alarm myPooledAlarm = new Alarm(Alarm.ThreadToUse.POOLED_THREAD, this);
+
     @NotNull
     private ImagePanel myPanel = new ImagePanel();
 
     public GraphPreviewFileEditor(@NotNull VirtualFile file, Project project) {
         myPanel.addImage(file);
+        Document myDocument = FileDocumentManager.getInstance().getDocument(file);
+        if (myDocument != null) {
+            myDocument.addDocumentListener(new DocumentListener() {
+
+                @Override
+                public void beforeDocumentChange(@NotNull DocumentEvent e) {
+                    myPooledAlarm.cancelAllRequests();
+                }
+
+                @Override
+                public void documentChanged(@NotNull final DocumentEvent e) {
+                    myPooledAlarm.addRequest(() -> myPanel.addImage(file), PARSING_CALL_TIMEOUT_MS);
+                }
+            }, this);
+        }
     }
 
     @NotNull
@@ -106,8 +130,9 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             noPreviewIsAvailable.setVisible(false);
         }
 
-        public void addImage(VirtualFile image) {
+        public synchronized void addImage(VirtualFile image) {
             this.image = image;
+            bufferedImage = null;
         }
         
         @Override
