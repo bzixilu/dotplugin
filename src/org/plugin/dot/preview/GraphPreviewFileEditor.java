@@ -27,8 +27,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEditor {
     private final static long PARSING_CALL_TIMEOUT_MS = 50L;
@@ -39,9 +41,9 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
     private ImagePanel myPanel = new ImagePanel();
 
     public GraphPreviewFileEditor(@NotNull VirtualFile file, Project project) {
-        myPanel.addImage(file);
         Document myDocument = FileDocumentManager.getInstance().getDocument(file);
         if (myDocument != null) {
+            myPanel.addImage(myDocument);
             myDocument.addDocumentListener(new DocumentListener() {
 
                 @Override
@@ -51,7 +53,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
 
                 @Override
                 public void documentChanged(@NotNull final DocumentEvent e) {
-                    myPooledAlarm.addRequest(() -> myPanel.addImage(file), PARSING_CALL_TIMEOUT_MS);
+                    myPooledAlarm.addRequest(() -> myPanel.addImage(myDocument), PARSING_CALL_TIMEOUT_MS);
                 }
             }, this);
         }
@@ -121,7 +123,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
     public static class ImagePanel extends JBPanel implements Disposable {
 
         BufferedImage bufferedImage;
-        private VirtualFile image;
+        private Document image;
         final JLabel noPreviewIsAvailable;
 
         public ImagePanel() {
@@ -130,7 +132,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             noPreviewIsAvailable.setVisible(false);
         }
 
-        public synchronized void addImage(VirtualFile image) {
+        public synchronized void addImage(@NotNull Document image) {
             this.image = image;
             bufferedImage = null;
         }
@@ -139,7 +141,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
         protected void paintComponent(Graphics g) {
             try {
                 if (bufferedImage == null) {
-                    try (InputStream dot = image.getInputStream()) {
+                    try (InputStream dot = new ByteArrayInputStream(image.getText().getBytes(StandardCharsets.UTF_8))) {
                         Graphviz graphviz = Graphviz.fromGraph(new Parser().read(dot));
                         bufferedImage = graphviz.width(this.getWidth() - 100).height(this.getHeight() - 100).render(Format.PNG).toImage();
                         noPreviewIsAvailable.setVisible(false);
