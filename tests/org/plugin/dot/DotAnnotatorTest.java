@@ -1,18 +1,12 @@
 package org.plugin.dot;
 
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
-
-import java.nio.file.Paths;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 
 /**
  * Created by bzixilu on 27.11.16.
  */
-public class DotAnnotatorTest extends LightCodeInsightFixtureTestCase {
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
+public class DotAnnotatorTest extends BasePlatformTestCase {
     @Override
     protected String getTestDataPath() {
         return "testData";

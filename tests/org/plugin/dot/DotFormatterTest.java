@@ -1,20 +1,19 @@
 package org.plugin.dot;
 
+import com.intellij.openapi.application.PluginPathManager;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.codeStyle.CodeStyleSettingsManager;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.containers.ContainerUtil;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by bzixilu on 29.01.17.
  */
-public class DotFormatterTest extends LightCodeInsightFixtureTestCase {
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
+public class DotFormatterTest extends BasePlatformTestCase {
+    @NotNull
     @Override
     protected String getTestDataPath() {
         return "testData";

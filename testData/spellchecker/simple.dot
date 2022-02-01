@@ -1,6 +1,6 @@
 digraph
     {
-    "<TYPO descr="Typo: In word 'typpppo'">typpppo</TYPO>" -> {"bot8"};
+    <weak_warning descr="No such such node specified in graph">"<TYPO descr="Typo: In word 'typpppo'">typpppo</TYPO>"</weak_warning> -> {"bot8"};
 
 
 // comment with <TYPO descr="Typo: In word 'typpppo'">typpppo</TYPO>
