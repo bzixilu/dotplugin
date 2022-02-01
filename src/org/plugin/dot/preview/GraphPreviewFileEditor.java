@@ -145,7 +145,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                         Graphviz graphviz = Graphviz.fromGraph(new Parser().read(dot));
                         bufferedImage = graphviz.width(this.getWidth() - 100).height(this.getHeight() - 100).render(Format.PNG).toImage();
                         noPreviewIsAvailable.setVisible(false);
-                    } catch (IOException | ParserException | GraphvizException e) {
+                    } catch (IOException | ParserException | GraphvizException|NoClassDefFoundError e) {
                         noPreviewIsAvailable.setVisible(true);
                     }
                 }
