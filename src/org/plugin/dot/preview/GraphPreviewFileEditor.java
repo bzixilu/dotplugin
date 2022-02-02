@@ -10,7 +10,6 @@ import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.FileEditorState;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.JBColor;
@@ -42,9 +41,9 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
     private final Alarm myPooledAlarm = new Alarm(Alarm.ThreadToUse.POOLED_THREAD, this);
 
     @NotNull
-    private ImagePanel myPanel = new ImagePanel();
+    private final ImagePanel myPanel = new ImagePanel();
 
-    public GraphPreviewFileEditor(@NotNull VirtualFile file, Project project) {
+    public GraphPreviewFileEditor(@NotNull VirtualFile file) {
         Document myDocument = FileDocumentManager.getInstance().getDocument(file);
         if (myDocument != null) {
             myPanel.addImage(myDocument);
@@ -167,6 +166,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                 }
             } catch (IOException | ParserException | GraphvizException | NoClassDefFoundError e) {
                 noPreviewIsAvailable.setVisible(true);
+                
             }
         }
 
