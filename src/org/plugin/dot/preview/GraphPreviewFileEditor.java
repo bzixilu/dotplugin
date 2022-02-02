@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.io.ByteArrayInputStream;
@@ -57,6 +58,13 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                 }
             }, this);
         }
+        myPanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent componentEvent) {
+                myPanel.bufferedImage = null;
+                myPanel.paintGraph(myPanel.getGraphics());
+            }
+        });
     }
 
     @NotNull
@@ -122,7 +130,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
 
     public static class ImagePanel extends JBPanel implements Disposable {
 
-        BufferedImage bufferedImage;
+        public BufferedImage bufferedImage;
         private Document image;
         final JLabel noPreviewIsAvailable;
 
@@ -137,8 +145,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             bufferedImage = null;
         }
         
-        @Override
-        protected void paintComponent(Graphics g) {
+        private void paintGraph(Graphics g) {
             try {
                 if (bufferedImage == null) {
                     try (InputStream dot = new ByteArrayInputStream(image.getText().getBytes(StandardCharsets.UTF_8))) {
@@ -155,6 +162,11 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             } catch (GraphvizException ignored) {
 
             }
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            paintGraph(g);
         }
 
         @Override
