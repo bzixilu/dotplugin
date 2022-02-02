@@ -19,6 +19,7 @@ import com.intellij.util.Alarm;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizException;
+import guru.nidi.graphviz.model.MutableGraph;
 import guru.nidi.graphviz.parse.Parser;
 import guru.nidi.graphviz.parse.ParserException;
 import org.jetbrains.annotations.NotNull;
@@ -135,8 +136,9 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
     public static class ImagePanel extends JBPanel implements Disposable {
 
         public BufferedImage bufferedImage;
-        private Document image;
+        private Document document;
         final JLabel noPreviewIsAvailable;
+        private MutableGraph current;
 
         public ImagePanel() {
             noPreviewIsAvailable = new JLabel("No preview is available");
@@ -144,27 +146,27 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             noPreviewIsAvailable.setVisible(false);
         }
 
-        public synchronized void addImage(@NotNull Document image) {
-            this.image = image;
+        public synchronized void addImage(@NotNull Document document) {
+            this.document = document;
             bufferedImage = null;
         }
-        
+
         private void paintGraph(Graphics g) {
-            try {
-                try (InputStream dot = new ByteArrayInputStream(image.getText().getBytes(StandardCharsets.UTF_8))) {
-                    Graphviz graphviz = Graphviz.fromGraph(new Parser().read(dot));
+            try (InputStream dot = new ByteArrayInputStream(document.getText().getBytes(StandardCharsets.UTF_8))) {
+                final MutableGraph mutableGraph = new Parser().read(dot);
+                if (bufferedImage == null || !mutableGraph.equals(current)) {
+                    Graphviz graphviz = Graphviz.fromGraph(mutableGraph);
                     bufferedImage = graphviz.width(this.getWidth() - 100).height(this.getHeight() - 100).render(Format.PNG).toImage();
-                    noPreviewIsAvailable.setVisible(false);
-                } catch (IOException | ParserException | GraphvizException|NoClassDefFoundError e) {
-                    noPreviewIsAvailable.setVisible(true);
+                    current = mutableGraph;
                 }
+                noPreviewIsAvailable.setVisible(false);
                 if (bufferedImage != null) {
                     g.setColor(JBColor.WHITE);
-                    g.fillRect( 50, 50, this.getWidth() - 100, this.getHeight() - 100);
+                    g.fillRect(50, 50, this.getWidth() - 100, this.getHeight() - 100);
                     g.drawImage(bufferedImage, 50, 50, this.getWidth() - 100, this.getHeight() - 100, this);
                 }
-            } catch (GraphvizException ignored) {
-
+            } catch (IOException | ParserException | GraphvizException | NoClassDefFoundError e) {
+                noPreviewIsAvailable.setVisible(true);
             }
         }
 
