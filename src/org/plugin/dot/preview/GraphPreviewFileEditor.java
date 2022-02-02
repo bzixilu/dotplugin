@@ -25,7 +25,8 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.io.ByteArrayInputStream;
@@ -34,7 +35,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEditor {
-    private final static long PARSING_CALL_TIMEOUT_MS = 50L;
+    private final static long PARSING_CALL_TIMEOUT_MS = 500L;
     @NotNull
     private final Alarm myPooledAlarm = new Alarm(Alarm.ThreadToUse.POOLED_THREAD, this);
 
@@ -48,13 +49,15 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             myDocument.addDocumentListener(new DocumentListener() {
 
                 @Override
-                public void beforeDocumentChange(@NotNull DocumentEvent e) {
+                public void bulkUpdateFinished(@NotNull Document document) {
                     myPooledAlarm.cancelAllRequests();
+                    myPooledAlarm.addRequest(() -> myPanel.paintGraph(myPanel.getGraphics()), PARSING_CALL_TIMEOUT_MS);
                 }
 
                 @Override
                 public void documentChanged(@NotNull final DocumentEvent e) {
-                    myPooledAlarm.addRequest(() -> myPanel.addImage(myDocument), PARSING_CALL_TIMEOUT_MS);
+                    myPooledAlarm.cancelAllRequests();
+                    myPooledAlarm.addRequest(() -> myPanel.paintGraph(myPanel.getGraphics()), PARSING_CALL_TIMEOUT_MS);
                 }
             }, this);
         }
@@ -147,14 +150,12 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
         
         private void paintGraph(Graphics g) {
             try {
-                if (bufferedImage == null) {
-                    try (InputStream dot = new ByteArrayInputStream(image.getText().getBytes(StandardCharsets.UTF_8))) {
-                        Graphviz graphviz = Graphviz.fromGraph(new Parser().read(dot));
-                        bufferedImage = graphviz.width(this.getWidth() - 100).height(this.getHeight() - 100).render(Format.PNG).toImage();
-                        noPreviewIsAvailable.setVisible(false);
-                    } catch (IOException | ParserException | GraphvizException|NoClassDefFoundError e) {
-                        noPreviewIsAvailable.setVisible(true);
-                    }
+                try (InputStream dot = new ByteArrayInputStream(image.getText().getBytes(StandardCharsets.UTF_8))) {
+                    Graphviz graphviz = Graphviz.fromGraph(new Parser().read(dot));
+                    bufferedImage = graphviz.width(this.getWidth() - 100).height(this.getHeight() - 100).render(Format.PNG).toImage();
+                    noPreviewIsAvailable.setVisible(false);
+                } catch (IOException | ParserException | GraphvizException|NoClassDefFoundError e) {
+                    noPreviewIsAvailable.setVisible(true);
                 }
                 if (bufferedImage != null) {
                     g.drawImage(bufferedImage, 50, 50, this.getWidth() - 100, this.getHeight() - 100, this);
