@@ -13,7 +13,6 @@ import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.JBColor;
-import com.intellij.ui.components.JBPanel;
 import com.intellij.util.Alarm;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
@@ -112,6 +111,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
     }
 
     @Override
+    
     public void removePropertyChangeListener(@NotNull PropertyChangeListener listener) {
     }
 
@@ -132,17 +132,24 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
         myPanel.dispose();
     }
 
-    public static class ImagePanel extends JBPanel implements Disposable {
+    public static class ImagePanel extends JPanel implements Disposable {
 
         public BufferedImage bufferedImage;
         private Document document;
         final JLabel noPreviewIsAvailable;
+        final JLabel noPreviewReason;
         private MutableGraph current;
 
         public ImagePanel() {
-            noPreviewIsAvailable = new JLabel("No preview is available");
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            noPreviewIsAvailable = new JLabel("<html><font color='lightgrey'>No preview is available</font></html>");
+            noPreviewIsAvailable.setHorizontalAlignment(SwingConstants.CENTER);
+            noPreviewReason = new JLabel("");
+            noPreviewReason.setHorizontalAlignment(SwingConstants.CENTER);
             add(noPreviewIsAvailable);
+            add(noPreviewReason);
             noPreviewIsAvailable.setVisible(false);
+            noPreviewReason.setVisible(false);
         }
 
         public synchronized void addImage(@NotNull Document document) {
@@ -159,14 +166,16 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                     current = mutableGraph;
                 }
                 noPreviewIsAvailable.setVisible(false);
+                noPreviewReason.setVisible(false);
                 if (bufferedImage != null) {
                     g.setColor(JBColor.WHITE);
                     g.fillRect(50, 50, this.getWidth() - 100, this.getHeight() - 100);
                     g.drawImage(bufferedImage, 50, 50, this.getWidth() - 100, this.getHeight() - 100, this);
                 }
             } catch (IOException | ParserException | GraphvizException | NoClassDefFoundError e) {
+                noPreviewReason.setText("<html><font color='grey'>Reason: " + e.getMessage() +"</font></html>");
+                noPreviewReason.setVisible(true);
                 noPreviewIsAvailable.setVisible(true);
-                
             }
         }
 
