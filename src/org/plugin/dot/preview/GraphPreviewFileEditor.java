@@ -13,6 +13,7 @@ import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBPanel;
 import com.intellij.util.Alarm;
 import guru.nidi.graphviz.engine.Format;
@@ -35,7 +36,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEditor {
-    private final static long PARSING_CALL_TIMEOUT_MS = 500L;
+    private final static long PARSING_CALL_TIMEOUT_MS = 1000L;
     @NotNull
     private final Alarm myPooledAlarm = new Alarm(Alarm.ThreadToUse.POOLED_THREAD, this);
 
@@ -158,6 +159,8 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                     noPreviewIsAvailable.setVisible(true);
                 }
                 if (bufferedImage != null) {
+                    g.setColor(JBColor.WHITE);
+                    g.fillRect( 50, 50, this.getWidth() - 100, this.getHeight() - 100);
                     g.drawImage(bufferedImage, 50, 50, this.getWidth() - 100, this.getHeight() - 100, this);
                 }
             } catch (GraphvizException ignored) {
@@ -167,6 +170,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
 
         @Override
         protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
             paintGraph(g);
         }
 
