@@ -176,6 +176,9 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                 noPreviewReason.setText("<html><font color='grey'>Reason: " + e.getMessage() +"</font></html>");
                 noPreviewReason.setVisible(true);
                 noPreviewIsAvailable.setVisible(true);
+                bufferedImage = null;
+                g.setColor(JBColor.WHITE);
+                g.fillRect(50, 50, this.getWidth() - 100, this.getHeight() - 100);
             }
         }
 
