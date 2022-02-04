@@ -132,6 +132,10 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
         myPanel.dispose();
     }
 
+    @Override
+    public void selectNotify() {
+    }
+
     public static class ImagePanel extends JPanel implements Disposable {
 
         public BufferedImage bufferedImage;
