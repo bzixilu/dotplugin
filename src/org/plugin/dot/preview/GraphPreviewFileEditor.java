@@ -13,6 +13,7 @@ import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.JBColor;
+import com.intellij.ui.components.JBPanel;
 import com.intellij.util.Alarm;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
@@ -65,7 +66,8 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             @Override
             public void componentResized(ComponentEvent componentEvent) {
                 myPanel.bufferedImage = null;
-                myPanel.paintGraph(myPanel.getGraphics());
+                myPooledAlarm.cancelAllRequests();
+                myPooledAlarm.addRequest(() -> myPanel.paintGraph(myPanel.getGraphics()), PARSING_CALL_TIMEOUT_MS);
             }
         });
     }
@@ -136,7 +138,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
     public void selectNotify() {
     }
 
-    public static class ImagePanel extends JPanel implements Disposable {
+    public static class ImagePanel extends JBPanel implements Disposable {
 
         public BufferedImage bufferedImage;
         private Document document;
@@ -172,6 +174,8 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                 noPreviewIsAvailable.setVisible(false);
                 noPreviewReason.setVisible(false);
                 if (bufferedImage != null) {
+                    noPreviewReason.setText("<html><font color='grey'>Graph preview</font></html>");
+                    noPreviewReason.setVisible(true);
                     g.setColor(JBColor.WHITE);
                     g.fillRect(50, 50, this.getWidth() - 100, this.getHeight() - 100);
                     g.drawImage(bufferedImage, 50, 50, this.getWidth() - 100, this.getHeight() - 100, this);
