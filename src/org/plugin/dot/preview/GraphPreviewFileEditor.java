@@ -177,8 +177,8 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                     noPreviewReason.setText("<html><font color='grey'>Graph preview</font></html>");
                     noPreviewReason.setVisible(true);
                     g.setColor(JBColor.WHITE);
-                    g.fillRect(50, 50, this.getWidth() - 100, this.getHeight() - 100);
-                    g.drawImage(bufferedImage, 50, 50, this.getWidth() - 100, this.getHeight() - 100, this);
+                    g.fillRect(50, 75, this.getWidth() - 100, this.getHeight() - 100);
+                    g.drawImage(bufferedImage, 50, 75, this.getWidth() - 100, this.getHeight() - 100, this);
                 }
             } catch (IOException | ParserException | GraphvizException | NoClassDefFoundError e) {
                 noPreviewReason.setText("<html><font color='grey'>Reason: " + e.getMessage() +"</font></html>");
@@ -186,7 +186,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                 noPreviewIsAvailable.setVisible(true);
                 bufferedImage = null;
                 g.setColor(JBColor.WHITE);
-                g.fillRect(50, 50, this.getWidth() - 100, this.getHeight() - 100);
+                g.fillRect(50, 75, this.getWidth() - 100, this.getHeight() - 100);
             }
         }
 
