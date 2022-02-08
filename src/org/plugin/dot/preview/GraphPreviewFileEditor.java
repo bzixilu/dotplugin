@@ -181,12 +181,14 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                     g.drawImage(bufferedImage, 50, 75, this.getWidth() - 100, this.getHeight() - 100, this);
                 }
             } catch (IOException | ParserException | GraphvizException | NoClassDefFoundError e) {
-                noPreviewReason.setText("<html><font color='grey'>Reason: " + e.getMessage() +"</font></html>");
+                noPreviewReason.setText("<html><font color='grey'>Reason: " + e.getMessage() + "</font></html>");
                 noPreviewReason.setVisible(true);
                 noPreviewIsAvailable.setVisible(true);
                 bufferedImage = null;
-                g.setColor(JBColor.WHITE);
-                g.fillRect(50, 75, this.getWidth() - 100, this.getHeight() - 100);
+                if (g != null) {
+                    g.setColor(JBColor.WHITE);
+                    g.fillRect(50, 75, this.getWidth() - 100, this.getHeight() - 100);
+                }
             }
         }
 
