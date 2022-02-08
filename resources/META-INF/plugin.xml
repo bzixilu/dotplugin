@@ -1,6 +1,6 @@
 <idea-plugin url="https://github.com/bzixilu/dotplugin">
     <id>org.plugin.dot.id</id>
-    <name>dotplugin</name>
+    <name>DOT Language</name>
     <version>1.3</version>
 
     <change-notes><![CDATA[
@@ -10,9 +10,7 @@
   <li>Whenever the preview panel is resized, the image is not regenerated #20</li>
   <li>Current release bundles vulnerable log4j JAR (PyCharm) #18</li>
 </ul>
-
-  
-  ]]></change-notes>
+   ]]></change-notes>
     <vendor email="bzixilu@gmail.com">bzixilu</vendor>
 
     <description><![CDATA[
