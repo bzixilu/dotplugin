@@ -27,7 +27,7 @@
         <lang.parserDefinition language="Dot" implementationClass="org.plugin.dot.DotParserDefinition"/>
         <lang.syntaxHighlighterFactory key="Dot" implementationClass="org.plugin.dot.highlighter.DotSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="org.plugin.dot.DotColorSettingsPage"/>
-        <annotator language="Dot" implementationClass="org.plugin.dot.DotAnnotator"/>
+<!--        <annotator language="Dot" implementationClass="org.plugin.dot.DotAnnotator"/>-->
         <lang.commenter language="Dot" implementationClass="org.plugin.dot.DotCommenter"/>
         <codeStyleSettingsProvider implementation="org.plugin.dot.codestyle.DotCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider implementation="org.plugin.dot.codestyle.DotLanguageCodeStyleSettingsProvider"/>
