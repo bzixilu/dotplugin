@@ -2,6 +2,7 @@
 package org.plugin.dot.preview;
 
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.event.DocumentEvent;
@@ -10,10 +11,12 @@ import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.FileEditorState;
+import com.intellij.openapi.ide.CopyPasteManager;
+import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.util.UserDataHolderBase;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.JBColor;
+import com.intellij.ui.colorpicker.CommonButton;
 import com.intellij.ui.components.JBPanel;
 import com.intellij.util.Alarm;
 import guru.nidi.graphviz.engine.Format;
@@ -27,6 +30,9 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -151,10 +157,27 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
 
         public ImagePanel() {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            final JToolBar toolBar = new JToolBar();
+            toolBar.setMaximumSize(new Dimension(100, 50));
+            final JPanel actionsToolBar = new JPanel();
+            toolBar.add(actionsToolBar, BorderLayout.WEST);
+
+            final CommonButton copyToClipboard = new CommonButton(AllIcons.Actions.Copy);
+            copyToClipboard.setDisabledIcon(IconLoader.getDisabledIcon(AllIcons.Actions.Copy));
+            copyToClipboard.addActionListener(it -> {
+                if (bufferedImage != null) {
+                    CopyPasteManager.getInstance().setContents(new ImageTransferable(bufferedImage));
+                }
+            });
+
+            copyToClipboard.setToolTipText("Copy graph preview image to clipboard");
+            actionsToolBar.add(copyToClipboard);
+            
             noPreviewIsAvailable = new JLabel("<html><font color='lightgrey'>No preview is available</font></html>");
             noPreviewIsAvailable.setHorizontalAlignment(SwingConstants.CENTER);
             noPreviewReason = new JLabel("");
             noPreviewReason.setHorizontalAlignment(SwingConstants.CENTER);
+            add(toolBar);
             add(noPreviewIsAvailable);
             add(noPreviewReason);
             noPreviewIsAvailable.setVisible(false);
@@ -207,6 +230,32 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
 
         @Override
         public void dispose() {
+        }
+    }
+
+    private static class ImageTransferable implements Transferable {
+        private final BufferedImage myImage;
+
+        public ImageTransferable(@NotNull BufferedImage image) {
+            myImage = image;
+        }
+
+        @Override
+        public DataFlavor[] getTransferDataFlavors() {
+            return new DataFlavor[]{DataFlavor.imageFlavor};
+        }
+
+        @Override
+        public boolean isDataFlavorSupported(DataFlavor dataFlavor) {
+            return DataFlavor.imageFlavor.equals(dataFlavor);
+        }
+
+        @Override
+        public Object getTransferData(DataFlavor dataFlavor) throws UnsupportedFlavorException {
+            if (!DataFlavor.imageFlavor.equals(dataFlavor)) {
+                throw new UnsupportedFlavorException(dataFlavor);
+            }
+            return myImage;
         }
     }
 }
