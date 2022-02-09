@@ -11,6 +11,7 @@ import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.util.UserDataHolderBase;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBPanel;
@@ -34,6 +35,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+
+import static com.intellij.openapi.util.text.StringUtil.trimStart;
 
 public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEditor {
     private final static long PARSING_CALL_TIMEOUT_MS = 1000L;
@@ -164,7 +167,11 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
         }
 
         private void paintGraph(Graphics g) {
-            try (InputStream dot = new ByteArrayInputStream(document.getText().getBytes(StandardCharsets.UTF_8))) {
+            String text = document.getText();
+            if (text.startsWith("#!")) {
+                text = trimStart(text, text.substring(0, text.indexOf("\n")));
+            }
+            try (InputStream dot = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8))) {
                 final MutableGraph mutableGraph = new Parser().read(dot);
                 if (bufferedImage == null || !mutableGraph.equals(current)) {
                     Graphviz graphviz = Graphviz.fromGraph(mutableGraph);
