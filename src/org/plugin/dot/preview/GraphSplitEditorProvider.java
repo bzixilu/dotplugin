@@ -23,7 +23,7 @@ public class GraphSplitEditorProvider implements FileEditorProvider, DumbAware {
   @Override
   public FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file) {
     TextEditor editor = (TextEditor) TextEditorProvider.getInstance().createEditor(project, file);
-    return new TextEditorWithPreview(editor, new GraphPreviewFileEditor(file));
+    return new TextEditorWithPreview(editor, new GraphPreviewFileEditor(file, project));
   }
 
   @NotNull

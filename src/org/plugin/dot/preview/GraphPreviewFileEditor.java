@@ -7,14 +7,19 @@ import com.intellij.openapi.Disposable;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
+import com.intellij.openapi.fileChooser.FileChooserFactory;
+import com.intellij.openapi.fileChooser.FileSaverDescriptor;
+import com.intellij.openapi.fileChooser.FileSaverDialog;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.ide.CopyPasteManager;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileWrapper;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.colorpicker.CommonButton;
 import com.intellij.ui.components.JBPanel;
@@ -28,6 +33,7 @@ import guru.nidi.graphviz.parse.ParserException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
@@ -50,9 +56,10 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
     private final Alarm myPooledAlarm = new Alarm(Alarm.ThreadToUse.POOLED_THREAD, this);
 
     @NotNull
-    private final ImagePanel myPanel = new ImagePanel();
+    private final ImagePanel myPanel;
 
-    public GraphPreviewFileEditor(@NotNull VirtualFile file) {
+    public GraphPreviewFileEditor(@NotNull VirtualFile file, Project project) {
+        myPanel = new ImagePanel(project);
         Document myDocument = FileDocumentManager.getInstance().getDocument(file);
         if (myDocument != null) {
             myPanel.addImage(myDocument);
@@ -155,7 +162,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
         final JLabel noPreviewReason;
         private MutableGraph current;
 
-        public ImagePanel() {
+        public ImagePanel(Project project) {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             final JToolBar toolBar = new JToolBar();
             toolBar.setMaximumSize(new Dimension(100, 50));
@@ -172,7 +179,27 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
 
             copyToClipboard.setToolTipText("Copy graph preview image to clipboard");
             actionsToolBar.add(copyToClipboard);
-            
+
+            final CommonButton saveAs = new CommonButton(AllIcons.General.ZoomIn);
+            saveAs.setDisabledIcon(IconLoader.getDisabledIcon(AllIcons.General.ZoomIn));
+            saveAs.addActionListener(it -> {
+                if (bufferedImage != null) {
+                    FileSaverDescriptor descriptor = new FileSaverDescriptor("Save Graph Preview Image", "", "png");
+                    final FileSaverDialog saveFileDialog = FileChooserFactory.getInstance().createSaveFileDialog(descriptor, project);
+                    final VirtualFileWrapper save = saveFileDialog.save(null);
+                    if (save != null) {
+                        try {
+                            ImageIO.write(bufferedImage, "png", save.getFile());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+
+            saveAs.setToolTipText("Save graph preview image to PNG file");
+            actionsToolBar.add(saveAs);
+
             noPreviewIsAvailable = new JLabel("<html><font color='lightgrey'>No preview is available</font></html>");
             noPreviewIsAvailable.setHorizontalAlignment(SwingConstants.CENTER);
             noPreviewReason = new JLabel("");
