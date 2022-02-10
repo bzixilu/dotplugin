@@ -169,7 +169,12 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             final JPanel actionsToolBar = new JPanel();
             toolBar.add(actionsToolBar, BorderLayout.WEST);
 
-            final CommonButton copyToClipboard = new CommonButton(AllIcons.Actions.Copy);
+            final CommonButton copyToClipboard = new CommonButton(AllIcons.Actions.Copy) {
+                @Override
+                public boolean isEnabled() {
+                    return bufferedImage != null;
+                }
+            };
             copyToClipboard.setDisabledIcon(IconLoader.getDisabledIcon(AllIcons.Actions.Copy));
             copyToClipboard.addActionListener(it -> {
                 if (bufferedImage != null) {
@@ -180,7 +185,12 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             copyToClipboard.setToolTipText("Copy graph preview image to clipboard");
             actionsToolBar.add(copyToClipboard);
 
-            final CommonButton saveAs = new CommonButton(AllIcons.General.ZoomIn);
+            final CommonButton saveAs = new CommonButton(AllIcons.General.ZoomIn) {
+                @Override
+                public boolean isEnabled() {
+                    return bufferedImage != null;
+                }
+            };
             saveAs.setDisabledIcon(IconLoader.getDisabledIcon(AllIcons.General.ZoomIn));
             saveAs.addActionListener(it -> {
                 if (bufferedImage != null) {
