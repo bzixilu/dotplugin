@@ -158,12 +158,12 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
 
         public BufferedImage bufferedImage;
         private Document document;
-        final JLabel noPreviewIsAvailable;
         final JLabel noPreviewReason;
         private MutableGraph current;
 
         public ImagePanel(Project project) {
-            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            final GridBagLayout layout = new GridBagLayout();
+            setLayout(layout);
             final JToolBar toolBar = new JToolBar();
             toolBar.setMaximumSize(new Dimension(100, 50));
             final JPanel actionsToolBar = new JPanel();
@@ -210,14 +210,24 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             saveAs.setToolTipText("Save graph preview image to PNG file");
             actionsToolBar.add(saveAs);
 
-            noPreviewIsAvailable = new JLabel("<html><font color='lightgrey'>No preview is available</font></html>");
-            noPreviewIsAvailable.setHorizontalAlignment(SwingConstants.CENTER);
             noPreviewReason = new JLabel("");
             noPreviewReason.setHorizontalAlignment(SwingConstants.CENTER);
-            add(toolBar);
-            add(noPreviewIsAvailable);
-            add(noPreviewReason);
-            noPreviewIsAvailable.setVisible(false);
+            GridBagConstraints c = new GridBagConstraints();
+            c.gridx = 0;
+            c.gridy = 0;
+            c.anchor = GridBagConstraints.NORTH;
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.weightx = 1;
+            c.weighty = 1;
+            
+            add(toolBar, c);
+            layout.setConstraints(toolBar, c);
+            c.weightx = 2;
+            c.weighty = 2;
+            c.anchor = GridBagConstraints.LAST_LINE_END;
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.gridy = 2;
+            add(noPreviewReason, c);
             noPreviewReason.setVisible(false);
         }
 
@@ -238,19 +248,16 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                     bufferedImage = graphviz.width(this.getWidth() - 100).height(this.getHeight() - 100).render(Format.PNG).toImage();
                     current = mutableGraph;
                 }
-                noPreviewIsAvailable.setVisible(false);
                 noPreviewReason.setVisible(false);
                 if (bufferedImage != null) {
-                    noPreviewReason.setText("<html><font color='grey'>Graph preview</font></html>");
-                    noPreviewReason.setVisible(true);
+                    noPreviewReason.setVisible(false);
                     g.setColor(JBColor.WHITE);
                     g.fillRect(50, 75, this.getWidth() - 100, this.getHeight() - 100);
                     g.drawImage(bufferedImage, 50, 75, this.getWidth() - 100, this.getHeight() - 100, this);
                 }
             } catch (IOException | ParserException | GraphvizException | NoClassDefFoundError e) {
-                noPreviewReason.setText("<html><font color='grey'>Reason: " + e.getMessage() + "</font></html>");
+                noPreviewReason.setText("<html><font color='grey'>Problem: " + e.getMessage() + "</font></html>");
                 noPreviewReason.setVisible(true);
-                noPreviewIsAvailable.setVisible(true);
                 bufferedImage = null;
                 if (g != null) {
                     g.setColor(JBColor.WHITE);
