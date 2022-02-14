@@ -165,9 +165,10 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             final GridBagLayout layout = new GridBagLayout();
             setLayout(layout);
             final JToolBar toolBar = new JToolBar();
+            toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
             toolBar.setMaximumSize(new Dimension(100, 50));
             final JPanel actionsToolBar = new JPanel();
-            toolBar.add(actionsToolBar, BorderLayout.WEST);
+            toolBar.add(actionsToolBar);
 
             final CommonButton copyToClipboard = new CommonButton(AllIcons.Actions.Copy) {
                 @Override
