@@ -198,7 +198,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                 if (bufferedImage != null) {
                     FileSaverDescriptor descriptor = new FileSaverDescriptor("Save Graph Preview Image", "", "png");
                     final FileSaverDialog saveFileDialog = FileChooserFactory.getInstance().createSaveFileDialog(descriptor, project);
-                    final VirtualFileWrapper save = saveFileDialog.save(null);
+                    final VirtualFileWrapper save = saveFileDialog.save((VirtualFile) null, null);
                     if (save != null) {
                         try {
                             ImageIO.write(bufferedImage, "png", save.getFile());
