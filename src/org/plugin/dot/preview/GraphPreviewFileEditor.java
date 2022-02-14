@@ -32,6 +32,7 @@ import guru.nidi.graphviz.parse.Parser;
 import guru.nidi.graphviz.parse.ParserException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.plugin.dot.DotIcons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -186,13 +187,13 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
             copyToClipboard.setToolTipText("Copy graph preview image to clipboard");
             actionsToolBar.add(copyToClipboard);
 
-            final CommonButton saveAs = new CommonButton(AllIcons.General.ZoomIn) {
+            final CommonButton saveAs = new CommonButton(DotIcons.SAVE) {
                 @Override
                 public boolean isEnabled() {
                     return bufferedImage != null;
                 }
             };
-            saveAs.setDisabledIcon(IconLoader.getDisabledIcon(AllIcons.General.ZoomIn));
+            saveAs.setDisabledIcon(IconLoader.getDisabledIcon(DotIcons.SAVE));
             saveAs.addActionListener(it -> {
                 if (bufferedImage != null) {
                     FileSaverDescriptor descriptor = new FileSaverDescriptor("Save Graph Preview Image", "", "png");
