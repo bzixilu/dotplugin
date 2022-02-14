@@ -65,13 +65,6 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
         if (myDocument != null) {
             myPanel.addImage(myDocument);
             myDocument.addDocumentListener(new DocumentListener() {
-
-                @Override
-                public void bulkUpdateFinished(@NotNull Document document) {
-                    myPooledAlarm.cancelAllRequests();
-                    myPooledAlarm.addRequest(() -> myPanel.paintGraph(myPanel.getGraphics()), PARSING_CALL_TIMEOUT_MS);
-                }
-
                 @Override
                 public void documentChanged(@NotNull final DocumentEvent e) {
                     myPooledAlarm.cancelAllRequests();
