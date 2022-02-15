@@ -9,9 +9,11 @@ import com.intellij.psi.PsiRecursiveElementVisitor;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.indexing.FileBasedIndex;
+import org.jetbrains.annotations.NotNull;
 import org.plugin.dot.filetypes.DotFileType;
 import org.plugin.dot.psi.*;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -121,6 +123,29 @@ public class DotPSITreeUtil extends GeneratedParserUtilBase {
                     psiRecursiveElementVisitor.visitElement(e);
                 }
             }
+        }
+        return ids;
+    }
+
+    /**
+     * Utility method returning all DotIDs in the file
+     *
+     * @return iterable set of all DotIds in file
+     */
+    public static Iterable<String> findDotIds(DotFile file) {
+        Set<String> ids = new HashSet<>();
+        PsiRecursiveElementVisitor psiRecursiveElementVisitor = new PsiRecursiveElementVisitor() {
+            
+            @Override
+            public void visitElement(@NotNull PsiElement element) {
+                if (element instanceof DotId) {
+                    ids.add(((DotId) element).getName());
+                }
+                super.visitElement(element);
+            }
+        };
+        if (file != null) {
+            Arrays.stream(file.getChildren()).forEach(psiRecursiveElementVisitor::visitElement);
         }
         return ids;
     }

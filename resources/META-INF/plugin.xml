@@ -41,6 +41,7 @@
         <lang.formatter language="Dot" implementationClass="org.plugin.dot.formatter.DotFormattingModelBuilder"/>
         <spellchecker.support language="Dot" implementationClass="org.plugin.dot.spellchecker.DotSpellcheckingStrategy"/>
         <fileEditorProvider implementation="org.plugin.dot.preview.GraphSplitEditorProvider"/>
+        <completion.contributor language="Dot" implementationClass="org.plugin.dot.contributors.DotCompletionContributor"/>
     </extensions>
 
     <actions>
