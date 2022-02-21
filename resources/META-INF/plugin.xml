@@ -1,17 +1,13 @@
 <idea-plugin url="https://github.com/bzixilu/dotplugin">
     <id>org.plugin.dot.id</id>
     <name>DOT Language</name>
-    <version>1.4</version>
+    <version>1.4.1</version>
 
     <change-notes><![CDATA[
-<h3>New:</h3>
-<ul>
-  <li>Add Export Functionality #14 - add "Save to..." and "Copy To Clipboard" actions</li>
-  <li>Shebang support #17</li>
-</ul>
 <h3>Fixed issues:</h3>
 <ul>
-  <li>turn off annotator - No such node specified in graph when nodes are specified #12</li>
+  <li>DOT language plugin fails since 1.3 #24</li>
+  <li>Problem: Error during rasterization in version 1.4 #23</li>
 </ul>
    ]]></change-notes>
     <vendor email="bzixilu@gmail.com">bzixilu</vendor>
@@ -34,10 +30,10 @@
         <lang.commenter language="Dot" implementationClass="org.plugin.dot.DotCommenter"/>
         <codeStyleSettingsProvider implementation="org.plugin.dot.codestyle.DotCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider implementation="org.plugin.dot.codestyle.DotLanguageCodeStyleSettingsProvider"/>
-        <!--psi.referenceContributor implementation="org.plugin.dot.contributors.DotReferenceContributor"/-->
-        <!--lang.refactoringSupport language="Dot" implementationClass="org.plugin.dot.DotRefactoringSupportProvider"/-->
-        <!--lang.findUsagesProvider language="Dot" implementationClass="org.plugin.dot.DotFindUsagesProvider"/-->
-        <!--gotoSymbolContributor implementation="org.plugin.dot.contributors.DotChooseByNameContributor"/-->
+        <psi.referenceContributor language="Dot" implementation="org.plugin.dot.contributors.DotReferenceContributor"/>
+        <lang.refactoringSupport language="Dot" implementationClass="org.plugin.dot.DotRefactoringSupportProvider"/>
+        <lang.findUsagesProvider language="Dot" implementationClass="org.plugin.dot.DotFindUsagesProvider"/>
+        <gotoSymbolContributor implementation="org.plugin.dot.contributors.DotChooseByNameContributor"/>
         <lang.formatter language="Dot" implementationClass="org.plugin.dot.formatter.DotFormattingModelBuilder"/>
         <spellchecker.support language="Dot" implementationClass="org.plugin.dot.spellchecker.DotSpellcheckingStrategy"/>
         <fileEditorProvider implementation="org.plugin.dot.preview.GraphSplitEditorProvider"/>
