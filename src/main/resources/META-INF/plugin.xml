@@ -1,0 +1,48 @@
+<idea-plugin url="hanousek.cz">
+    <id>org.plugin.dot.dotplugin</id>
+    <name>DOT Language</name>
+    <version>2.0.1</version>
+
+    <change-notes><![CDATA[
+<h3>Fixed issues:</h3>
+<ul>
+  <li>Reorganized for new gradle build which makes development feasible</li>
+  <li>Updated most of the deprecated stuff</li>
+  <li>Fixed formatter indentation</li>
+</ul>
+   ]]></change-notes>
+    <vendor email="bzixilu@gmail.com">bzixilu</vendor>
+
+    <description><![CDATA[
+      This plugin provides basic editing support and graph preview for dot language files (dot and gv) in IntelliJ IDEA
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="213"/>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="dot file" implementationClass="org.plugin.dot.filetypes.DotFileType" fieldName="INSTANCE" language="Dot" extensions="dot"/>
+        <lang.parserDefinition language="Dot" implementationClass="org.plugin.dot.DotParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Dot" implementationClass="org.plugin.dot.highlighter.DotSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="org.plugin.dot.DotColorSettingsPage"/>
+        <annotator language="Dot" implementationClass="org.plugin.dot.DotAnnotator"/>
+        <lang.commenter language="Dot" implementationClass="org.plugin.dot.DotCommenter"/>
+        <codeStyleSettingsProvider implementation="org.plugin.dot.codestyle.DotCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider implementation="org.plugin.dot.codestyle.DotLanguageCodeStyleSettingsProvider"/>
+        <psi.referenceContributor language="Dot" implementation="org.plugin.dot.contributors.DotReferenceContributor"/>
+        <lang.refactoringSupport language="Dot" implementationClass="org.plugin.dot.DotRefactoringSupportProvider"/>
+        <lang.findUsagesProvider language="Dot" implementationClass="org.plugin.dot.DotFindUsagesProvider"/>
+        <gotoSymbolContributor implementation="org.plugin.dot.contributors.DotChooseByNameContributor"/>
+        <lang.formatter language="Dot" implementationClass="org.plugin.dot.formatter.DotFormattingModelBuilder"/>
+        <spellchecker.support language="Dot" implementationClass="org.plugin.dot.spellchecker.DotSpellcheckingStrategy"/>
+        <fileEditorProvider implementation="org.plugin.dot.preview.GraphSplitEditorProvider"/>
+        <completion.contributor language="Dot" implementationClass="org.plugin.dot.contributors.DotCompletionContributor"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+
+</idea-plugin>

@@ -3,7 +3,7 @@ digraph
     <weak_warning descr="No such such node specified in graph">"<TYPO descr="Typo: In word 'typpppo'">typpppo</TYPO>"</weak_warning> -> {"bot8"};
 
 
-// comment with <TYPO descr="Typo: In word 'typpppo'">typpppo</TYPO>
+    // comment with <TYPO descr="Typo: In word 'typpppo'">typpppo</TYPO>
 
-/* yet another comment with <TYPO descr="Typo: In word 'typppppo'">typppppo</TYPO> */
+    /* yet another comment with <TYPO descr="Typo: In word 'typppppo'">typppppo</TYPO> */
 }

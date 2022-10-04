@@ -1,14 +1,14 @@
 digraph {
-	subgraph cluster_0 {
-		label="Subgraph A";
-		a -> b;
-		b -> c;
-		c -> d;
-	}
+    subgraph cluster_0 {
+    label = "Subgraph A";
+    a -> b;
+    b -> c;
+    c -> d;
+    }
 
-	subgraph cluster_1 {
-		label="Subgraph B";
-		a -> f;
-		f -> c;
+    subgraph cluster_1 {
+    label = "Subgraph B";
+    a -> f;
+    f -> c;
     }
 }
