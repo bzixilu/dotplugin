@@ -26,7 +26,7 @@ public class DotChooseByNameContributor implements ChooseByNameContributor {
   @Override
   public NavigationItem[] getItemsByName(String name, String pattern, Project project, boolean includeNonProjectItems) {
     // todo include non project items
-    List<DotId> properties = (List<DotId>) DotPSITreeUtil.findDotIds(project, name);
+    Set<DotId> properties = (Set<DotId>) DotPSITreeUtil.findDotIds(project, name);
     return properties.toArray(new NavigationItem[properties.size()]);
   }
 }
