@@ -3,6 +3,7 @@ package org.plugin.dot.preview;
 
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.event.DocumentEvent;
@@ -52,6 +53,7 @@ import java.nio.charset.StandardCharsets;
 import static com.intellij.openapi.util.text.StringUtil.trimStart;
 
 public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEditor {
+    private static Logger log = Logger.getInstance(GraphPreviewFileEditor.class);
     private final static long PARSING_CALL_TIMEOUT_MS = 1000L;
     @NotNull
     private final Alarm myPooledAlarm = new Alarm(Alarm.ThreadToUse.POOLED_THREAD, this);
@@ -251,6 +253,7 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                     g.drawImage(bufferedImage, 50, 75, this.getWidth() - 100, this.getHeight() - 100, this);
                 }
             } catch (IOException | ParserException | GraphvizException | NoClassDefFoundError e) {
+                log.error(e);
                 noPreviewReason.setText("<html><font color='grey'>Problem: " + e.getMessage() + "</font></html>");
                 noPreviewReason.setVisible(true);
                 bufferedImage = null;
