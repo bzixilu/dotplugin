@@ -71,7 +71,7 @@ public class DotPSITreeUtil extends GeneratedParserUtilBase {
      * @param id_     - DotId id for searching
      * @return iterable set of DotIds naming as id
      */
-    public static Iterable<DotId> findDotIds(Project project, String id_) {
+    public static Set<DotId> findDotIds(Project project, String id_) {
         Set<DotId> ids = new HashSet<>();
         PsiRecursiveElementVisitor psiRecursiveElementVisitor = new PsiRecursiveElementVisitor() {
             @Override

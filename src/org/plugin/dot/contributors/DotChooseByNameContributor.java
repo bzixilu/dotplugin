@@ -1,17 +1,19 @@
 package org.plugin.dot.contributors;
 
-import com.intellij.navigation.*;
+import com.intellij.navigation.ChooseByNameContributor;
+import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import org.plugin.dot.DotPSITreeUtil;
 import org.plugin.dot.psi.DotId;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DotChooseByNameContributor implements ChooseByNameContributor {
   @NotNull
   @Override
-  public String[] getNames(Project project, boolean includeNonProjectItems) {
+  public String @NotNull [] getNames(Project project, boolean includeNonProjectItems) {
     Iterable<DotId> properties = DotPSITreeUtil.findDotIds(project);
     List<String> names = new ArrayList<String>();
     for (DotId property : properties) {
@@ -19,14 +21,13 @@ public class DotChooseByNameContributor implements ChooseByNameContributor {
         names.add(property.getText());
       }
     }
-    return names.toArray(new String[names.size()]);
+    return names.toArray(new String[0]);
   }
 
   @NotNull
   @Override
-  public NavigationItem[] getItemsByName(String name, String pattern, Project project, boolean includeNonProjectItems) {
+  public NavigationItem @NotNull [] getItemsByName(String name, String pattern, Project project, boolean includeNonProjectItems) {
     // todo include non project items
-    List<DotId> properties = (List<DotId>) DotPSITreeUtil.findDotIds(project, name);
-    return properties.toArray(new NavigationItem[properties.size()]);
+      return DotPSITreeUtil.findDotIds(project, name).stream().toList().toArray(new NavigationItem[0]);
   }
 }
