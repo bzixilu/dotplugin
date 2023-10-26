@@ -1,5 +1,5 @@
 <idea-plugin url="https://github.com/bzixilu/dotplugin">
-    <id>org.plugin.dot.dotplugin</id>
+    <id>org.plugin.dot.id</id>
     <name>DOT Language</name>
     <version>1.5.0</version>
 
