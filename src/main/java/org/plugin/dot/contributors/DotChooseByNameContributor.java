@@ -9,6 +9,7 @@ import org.plugin.dot.psi.DotId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class DotChooseByNameContributor implements ChooseByNameContributor {
   @NotNull
@@ -27,7 +28,7 @@ public class DotChooseByNameContributor implements ChooseByNameContributor {
   @NotNull
   @Override
   public NavigationItem @NotNull [] getItemsByName(String name, String pattern, Project project, boolean includeNonProjectItems) {
-    // todo include non project items
-      return DotPSITreeUtil.findDotIds(project, name).stream().toList().toArray(new NavigationItem[0]);
+    Set<DotId> properties = DotPSITreeUtil.findDotIds(project, name);
+    return properties.toArray(new NavigationItem[0]);
   }
 }
