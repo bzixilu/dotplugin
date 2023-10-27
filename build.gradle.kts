@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "org.plugin.dot.id"
-version = "1.5.0"
+version = "1.5.3"
 
 repositories {
     mavenCentral()
@@ -33,6 +33,11 @@ dependencies {
     api("guru.nidi:graphviz-java:0.18.1") {
         exclude("org.slf4j", "slf4j-api")
     }
+    implementation("org.apache.xmlgraphics:batik-codec:1.17") {
+        exclude("xml-apis", "xml-apis")
+        exclude("xml-apis", "xml-apis-ext")
+    }
+
 }
 
 tasks {
