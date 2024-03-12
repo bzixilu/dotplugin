@@ -25,9 +25,7 @@ import com.intellij.ui.JBColor;
 import com.intellij.ui.colorpicker.CommonButton;
 import com.intellij.ui.components.JBPanel;
 import com.intellij.util.Alarm;
-import guru.nidi.graphviz.engine.Format;
-import guru.nidi.graphviz.engine.Graphviz;
-import guru.nidi.graphviz.engine.GraphvizException;
+import guru.nidi.graphviz.engine.*;
 import guru.nidi.graphviz.model.MutableGraph;
 import guru.nidi.graphviz.parse.Parser;
 import guru.nidi.graphviz.parse.ParserException;
@@ -242,7 +240,11 @@ public class GraphPreviewFileEditor extends UserDataHolderBase implements FileEd
                 final MutableGraph mutableGraph = new Parser().read(dot);
                 if (bufferedImage == null || !mutableGraph.equals(current)) {
                     Graphviz graphviz = Graphviz.fromGraph(mutableGraph);
-                    bufferedImage = graphviz.width(this.getWidth() - 100).height(this.getHeight() - 100).render(Format.PNG).toImage();
+                    bufferedImage = graphviz
+                            .width(getWidth() - 100)
+                            .height(getHeight() - 100)
+                            .render(Format.PNG)
+                            .toImage();
                     current = mutableGraph;
                 }
                 noPreviewReason.setVisible(false);

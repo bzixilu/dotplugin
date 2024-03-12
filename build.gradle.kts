@@ -24,36 +24,30 @@ sourceSets {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2021.3.3")
+    version.set("2022.2.5")
     type.set("IC")
     plugins.set(listOf(/* Plugin Dependencies */))
 }
 
 dependencies {
-    api("guru.nidi:graphviz-java:0.18.1") {
+    implementation("guru.nidi:graphviz-java:0.18.1") {
         exclude("org.slf4j", "slf4j-api")
     }
-    implementation("org.apache.xmlgraphics:batik-codec:1.17") {
-        exclude("xml-apis", "xml-apis")
-        exclude("xml-apis", "xml-apis-ext")
-    }
-
+    implementation("org.graalvm.js:js:23.0.3")
 }
 
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "11"
+        kotlinOptions.jvmTarget = "17"
     }
 
-
-
     patchPluginXml {
-        sinceBuild.set("213")
+        sinceBuild.set("222")
         untilBuild.set("")
     }
 
